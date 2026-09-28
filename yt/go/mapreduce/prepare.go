@@ -337,7 +337,11 @@ func (p *prepare) prepare(opts []OperationOption) error {
 		cypress = p.mr.tx
 	}
 
-	if p.spec.Type != yt.OperationRemoteCopy {
+	// DEBUG(orloffv): temporarily disabled to isolate whether cross-cluster
+	// rich-ypath inputs only fail here (this client-side existence/type
+	// pre-check always uses p.mr.yc, ignoring any input's Cluster attribute)
+	// or fail later too. Do not merge this as-is.
+	if false && p.spec.Type != yt.OperationRemoteCopy {
 		for _, inputTablePath := range p.spec.InputTablePaths {
 			var tableAttrs struct {
 				Typ    yt.NodeType   `yson:"type"`
